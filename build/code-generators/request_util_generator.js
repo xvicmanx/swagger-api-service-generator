@@ -1,0 +1,12 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var requestUtilDefinition = function requestUtilDefinition() {
+  return "\n  // NOTE: It may be necessary to include the fetch library\n  // For example,\n  // const fetch = require('node-fetch');\n\n  const convertToUrlParams = (data) => {\n    return Object.keys(data).reduce(\n        (result, key) => `${key}=${encodeURIComponent(data[key])}`,\n        ''\n    );\n  };\n\n  // Shorthand data types\n  const PredefinedDataTypesMap = {\n    'json': 'application/json',\n    'jsonp': 'application/javascript',\n    'html': 'text/html',\n    'xml': 'application/xml',\n    'text': 'text/plain',\n    'form-data': 'multipart/form-data',\n    'url-encoded': 'application/x-www-form-urlencoded; charset=utf-8',\n  };\n\n  const makeRequest = (\n    url,\n    method,\n    data,\n    contentType\n  ) => {\n    // if the shorhand  is not in the map it takes the string as it comes\n    // (for not predefined content types)\n    const headers = {\n      'Content-Type': PredefinedDataTypesMap[contentType] ?\n      PredefinedDataTypesMap[contentType] : contentType,\n      ...data.headers\n    };\n\n    const payload = {\n      method,\n      headers,\n    };\n\n    if (Object.keys(data.body).length > 0) {\n      payload.body = JSON.stringify(data.body);\n    }\n\n    return fetch(\n      `${url}?${convertToUrlParams(data.query)}`,\n      payload\n    );\n  };\n\n  const request = {\n    get: (endpoint, data, contentType = 'json') => {\n      return makeRequest(\n        endpoint,\n        'GET',\n        data,\n        contentType\n      );\n    },\n    post: (endpoint, data, contentType = 'json') => {\n      return makeRequest(\n        endpoint,\n        'POST',\n        data,\n        contentType\n      );\n    },\n    put: (endpoint, data, contentType = 'json') => {\n      return makeRequest(\n        endpoint,\n        'PUT',\n        data,\n        contentType\n      );\n    },\n    'delete': (endpoint, data, contentType = 'json') => {\n      return makeRequest(\n        endpoint,\n        'DELETE',\n        data,\n        contentType\n      );\n    },\n  };\n  \n  export default request;\n  ";
+};
+
+exports.default = function () {
+  return requestUtilDefinition();
+};
