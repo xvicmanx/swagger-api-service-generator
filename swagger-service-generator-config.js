@@ -1,11 +1,9 @@
-module.exports ={
-    endpointFilter: function (data) {
-      var endpoint = data.endpoint;
+module.exports = {
+  swaggerDefinitionFile: 'http://petstore.swagger.io/v2/swagger.json',
+  endpointFilter: function (data) {
       var method = data.method;
-      var allowedMethods = ['post', 'get', 'put', 'delete'];
-      var notProto = endpoint.operationId.toLowerCase().indexOf('prototype') < 0;
+      var allowedMethods = ['post', 'get'];
       var isMethodAllowed = allowedMethods.indexOf(method.toLowerCase()) >= 0;
-      return notProto && isMethodAllowed;
+      return isMethodAllowed;
     },
-    swaggerDefinitionFile: 'http://petstore.swagger.io/v2/swagger.json',
-}
+};

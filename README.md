@@ -7,21 +7,48 @@ An util to generate service API consumers from a Swagger specification.
 To get started it is only necessary to clone this repository, install all the dependencies, configure the file `swagger-service-generator-config.js` and 
 run the generator command.
 
-```
+```bash
   git clone https://github.com/xvicmanx/swagger-api-service-generator
   npm install
   npm run generate-services
 ```
 
 
-<!-- ## Running the tests
+## Example
 
-To test the code [Jest](https://facebook.github.io/jest/) is being used.
+Assuming you have install the package, lets take as an example the PetStore API.
+Go to the file
+`swagger-service-generator-config.js`
+and make it look like this.
 
-In order to test your code run the following command: 
+ 
+
+```js
+module.exports = {
+  swaggerDefinitionFile: 'http://petstore.swagger.io/v2/swagger.json',
+  endpointFilter: function (data) {
+      var method = data.method;
+      var allowedMethods = ['post', 'get'];
+      var isMethodAllowed = allowedMethods.indexOf(method.toLowerCase()) >= 0;
+      return isMethodAllowed;
+    },
+};
+
+```
+
+The first property `swaggerDefinitionFile` is the url of your swagger json.
+
+The second property `endpointFilter` is a filter function for the endpoints. In this case we are only allowing `get` and `post` enpoints.
+
+Once the file is modified run
+
 ```bash
-npm test
-``` -->
+  npm run generate-services
+```
+This should generate a folder called `api` with your services and helpers files in it.
+
+As the endpoints in the [Petstore Swagger](http://petstore.swagger.io/v2/swagger.json) belong to three different tags `pet`, `store`, and `user`; this way three services `PetService`, `StoreService`, and `UserService` are generated respectively. Each service contains the endpoints that belong to each tag.
+
 
 <!-- ## Deployment
 
