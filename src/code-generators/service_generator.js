@@ -44,6 +44,14 @@ const getMethodText = (extractor) => {
         ...paramNames.bodyParams,
         ...paramNames.queryParams,
         ...paramNames.formsParams,
+        ...paramNames.headerParams,
+    );
+
+    const allButHeaderParams = [].concat(
+        ...paramNames.pathParams,
+        ...paramNames.bodyParams,
+        ...paramNames.queryParams,
+        ...paramNames.formsParams,
     );
 
     const canProduceJSON = extractor.canProduceJSON();
@@ -58,7 +66,7 @@ const getMethodText = (extractor) => {
             endName: extractor.getEndpointConstantName(),
             contentType: extractor.getContentType(),
             bodyParamsText: paramNames.bodyParams.length > 0 ? paramNames.bodyParams.join(', ') : '{}',
-            headersText: extractor.getSecurityKeys().map(k => getHeaderText(k, allParams)).join('\n'),
+            headersText: paramNames.headerParams.map(k => getHeaderText(k, allButHeaderParams)).join('\n'),
             pathParamsText: paramNames.pathParams,
             queryParamsText: paramNames.queryParams,
             formsParamsText: paramNames.formsParams,

@@ -73,6 +73,10 @@ export const endpointParamNames = ({ parameters }, path) => {
             parameters,
             'query'
         ),
+        headerParams: paramsIn(
+            parameters,
+            'header'
+        ),
         pathParams: paramsInPath(path),
     };
 };
@@ -97,8 +101,8 @@ export const getJSDocText = ({
 
     return `
     /** ${operationName}
-     * Summary: ${summary || description}
-     * Description: ${description || summary}
+     * Summary: ${(summary || description).replace('/**', '').trim()}
+     * Description: ${(description || summary).replace('/**', '').trim()}
      * 
      * @typedef ${toTitleCase(operationName)}Payload
      * ${properiesText}
