@@ -7,7 +7,8 @@
     "build": "babel src -d build",
     "babel-run": "node ./node_modules/babel-cli/bin/babel-node.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-services": "npm run babel-run src/index.js"
+    "generate-services": "npm run babel-run src/index.js",
+    "test-service": "npm run babel-run src/test.js"
   },
   "author": "",
   "license": "ISC",

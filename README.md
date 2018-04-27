@@ -47,7 +47,33 @@ Once the file is modified run
 ```
 This should generate a folder called `api` with your services and helpers files in it.
 
-As the endpoints in the [Petstore Swagger](http://petstore.swagger.io/v2/swagger.json) belong to three different tags `pet`, `store`, and `user`; this way three services `PetService`, `StoreService`, and `UserService` are generated respectively. Each service contains the endpoints that belong to each tag.
+As the endpoints in the [Petstore Swagger](http://petstore.swagger.io/v2/swagger.json) belong to three different tags `pet`, `store`, and `user`; this way three services `pet/service.js`, `store/service.js`, and `user/service.js` are generated respectively. Each service contains the methods to the api endpoints that belong to each tag.
+
+```
+api
+├── __core__
+│   └── helpers.js    # Helper functions
+│   └── request.js    # API requester
+│ 
+└── __shared__
+│   └── headers.js    # Custom header resolver functions
+│   └── constants.js  # General constants (BASE URL of the API, etc)
+|
+└── pet
+│   └── endpoints.js  # Endpoint constant functions
+│   └── service.js    # Endpoint service
+|
+└── store
+│   └── endpoints.js  # Endpoint constant functions
+│   └── service.js    # Endpoint service
+|
+└── user
+│   └── endpoints.js  # Endpoint constant functions
+│   └── service.js    # Endpoint service
+|
+```
+
+
 
 
 <!-- ## Deployment

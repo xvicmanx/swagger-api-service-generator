@@ -1,7 +1,7 @@
-import request from '../request';
-import { notEmptyProps, throwIfAnyMissing } from '../helpers';
-import endpoints from '../endpoints';
-import RequestHeaders from '../headers';
+import request from '../__core__/request';
+import { notEmptyProps, throwIfAnyMissing } from '../__core__/helpers';
+import endpoints from './endpoints';
+import RequestHeaders from '../__shared__/headers';
 
 ${entityTypesText}
 

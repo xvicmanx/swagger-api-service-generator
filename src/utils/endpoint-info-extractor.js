@@ -114,52 +114,18 @@ const EndpointInfoExtractor = function ({
         return paramsInPath(path);
     };
 
-    this.getComponentName = function () {
-        const operationName = getOperationName(endpoint.operationId);
-        const name = toTitleCase(operationName);
-        return `${name}Component`;
-    };
-
     this.getComponentTag = function () {
         return endpoint.tags && endpoint.tags.length > 0 ? endpoint.tags[0] : 'core';
     };
 
-    this.getComponentRoute = function () {
-        const operationName = getOperationName(endpoint.operationId);
-        return camelToSnakeCase(operationName).toLowerCase().replace(/_/g, '-');
-    };
-
-    this.getContainerName = function () {
-        const operationName = getOperationName(endpoint.operationId);
-        const name = toTitleCase(operationName);
-        return `${name}Container`;
-    };
-
-    this.getComponentPath = function () {
-        const tag = this.getComponentTag();
-        const name = this.getComponentName();
-        return `${tag}/${name}`;
-    };
-
-    this.getContainerPath = function () {
-        const tag = this.getComponentTag();
-        const name = this.getContainerName();
-        return `${tag}/${name}`;
-    };
-
-    this.getActionsPath = function () {
-        const tag = this.getComponentTag();
-        return `actions/${toTitleCase(tag)}Actions`;
-    };
-
-    this.getReducersPath = function () {
-        const tag = this.getComponentTag();
-        return `reducers/${toTitleCase(tag)}Reducers`;
-    };
-
     this.getServicePath = function () {
         const tag = this.getComponentTag();
-        return `services/${toTitleCase(tag)}Service`;
+        return `${tag}/service`;
+    };
+
+    this.getEndpointsFilePath = function () {
+        const tag = this.getComponentTag();
+        return `${tag}/endpoints`;
     };
 
     this.getActionResultData = function () {

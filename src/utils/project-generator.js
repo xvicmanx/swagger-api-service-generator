@@ -12,16 +12,19 @@ import requestUtilGenerator from '../code-generators/request_util_generator';
 import helpersGenerator from '../code-generators/helpers_generator';
 import endpointsGenerator from '../code-generators/endpoints_generator';
 import serviceGenerator from '../code-generators/service_generator';
+import constantsGenerator from '../code-generators/constants_generator';
 
 import EndpointInfoExtractor from './endpoint-info-extractor';
 
 const FILE_PATHS = {
-    requester: dir => `${dir}/request.js`,
-    helpers: dir => `${dir}/helpers.js`,
-    endpoints: dir => `${dir}/endpoints.js`,
-    headers: dir => `${dir}/headers.js`,
+    requester: dir => `${dir}/__core__/request.js`,
+    helpers: dir => `${dir}/__core__/helpers.js`,
+    endpoints: (dir, endpointsPath) => `${dir}/${endpointsPath}.js`,
+    headers: dir => `${dir}/__shared__/headers.js`,
+    constants: dir => `${dir}/__shared__/constants.js`,
     service: (dir, servicePath) => `${dir}/${servicePath}.js`,
-    servicesFolder: dir => `${dir}/services/`,
+    core: dir => `${dir}/__core__/`,
+    shared: dir => `${dir}/__shared__/`,
 };
 
 const makeDir = (dir) => {
@@ -36,7 +39,8 @@ const getTags = (definition, filter) => {
 
 const generateProjectFolders = (dir) => {
     makeDir(dir);
-    makeDir(FILE_PATHS.servicesFolder(dir));
+    makeDir(FILE_PATHS.core(dir))
+    makeDir(FILE_PATHS.shared(dir))
 };
 
 
@@ -51,13 +55,6 @@ const generateRequester = (dir) => {
     writeJSFile(
         FILE_PATHS.requester(dir),
         requestUtilGenerator()
-    );
-};
-
-const generateEndpoints = (dir, definition, filter) => {
-    writeJSFile(
-        FILE_PATHS.endpoints(dir),
-        endpointsGenerator(definition, filter)
     );
 };
 
@@ -85,6 +82,29 @@ const generateService = (dir, definition, filter) => {
 };
 
 
+const generateEndpoints = (dir, definition, filter) => {
+    const tags = getTags(definition, filter);
+    Object.keys(tags).forEach((tag) => {
+        writeJSFile(
+            FILE_PATHS.endpoints(
+                dir,
+                tags[tag].getEndpointsFilePath(),
+            ),
+            endpointsGenerator(definition, (data) => {
+                const extractor = new EndpointInfoExtractor({ endpoint: data.endpoint });
+                return filter(data) && extractor.getComponentTag() === tag;
+            })
+        );
+    });
+};
+
+const generateConstants = (dir, definition, filter) => {
+    writeJSFile(
+        FILE_PATHS.constants(dir),
+        constantsGenerator(definition)
+    );
+};
+
 
 const ProjectGenerator = function (base, definition, config, filter) {
 
@@ -96,6 +116,7 @@ const ProjectGenerator = function (base, definition, config, filter) {
         generateHelpers(dir);
 
         generateEndpoints(dir, definition, filter);
+        generateConstants(dir, definition, filter);
         generateHeaders(dir, definition, filter);
 
         generateService(dir, definition, filter);
