@@ -1,6 +1,13 @@
-// NOTE: It may be necessary to include the fetch library
-  // For example,
-  // const fetch = require('node-fetch');
+// NOTE: Include fetch
+
+// const fetch = require('node-fetch'); // For Backend only
+
+// require('whatwg-fetch'); // For Frontend only
+
+// For Both Front and Backend
+// require('es6-promise').polyfill();
+// require('isomorphic-fetch');
+
 
   const convertToUrlParams = (data) => {
     return Object.keys(data).reduce(

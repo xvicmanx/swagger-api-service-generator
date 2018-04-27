@@ -74,6 +74,137 @@ api
 ```
 
 
+Now lets take as an example one endpoint that belongs to the `pet` tag.
+
+```js
+
+"/pet/{petId}": {
+  "get": {
+    "tags": [
+      "pet"
+    ],
+      "summary": "Find pet by ID",
+        "description": "Returns a single pet",
+          "operationId": "getPetById",
+            "produces": [
+              "application/xml",
+              "application/json"
+            ],
+              "parameters": [
+                {
+                  "name": "petId",
+                  "in": "path",
+                  "description": "ID of pet to return",
+                  "required": true,
+                  "type": "integer",
+                  "format": "int64"
+                }
+              ],
+                "responses": {
+      "200": {
+        "description": "successful operation",
+          "schema": {
+          "$ref": "#/definitions/Pet"
+        }
+      },
+      "400": {
+        "description": "Invalid ID supplied"
+      },
+      "404": {
+        "description": "Pet not found"
+      }
+    },
+    "security": [
+      {
+        "api_key": []
+      }
+    ]
+  },
+```
+
+Because this endpoint belong to the tag `pet`, when generated it will be inside the service
+located at `api/pet/service.js`:
+
+```js
+/** getPetById
+ * Summary: Find pet by ID
+ * Description: Returns a single pet
+ * 
+ * @typedef GetPetByIdPayload
+ * 
+ * @property {integer} petId [required] ID of pet to return
+ * 
+ * 
+ * @param {GetPetByIdPayload} getPetByIdPayload
+ *
+ *  200 - successful operation
+ *  400 - Invalid ID supplied
+ *  404 - Pet not found
+ *
+ * @return {Promise<Pet>}
+ */
+export const getPetById = (getPetByIdPayload) => {
+  throwIfAnyMissing(['petId'], getPetByIdPayload);
+  const {
+    petId
+  } = getPetByIdPayload;
+  return request.get(
+    endpoints.GET_PET_BY_ID({
+      petId
+    }), {
+      query: notEmptyProps({}),
+      body: {},
+      form: {},
+      headers: {},
+    },
+    'json'
+  ).then(response => response.json());
+};
+```
+
+The method name, endpoint name, and payload type are obtained from the `operationId` in the swagger definition. The parameters are obtained  from the `parameters` property. The
+`description` and `summary` are obtained from the same properties in the definiton.
+The response type is obtained from the  `produces` property being `json` the default one.
+Finally, as the only required parameter is `petId` is the one that is being checked.
+
+Taking a look at `api/pet/endpoints.js`, it can be seen the functions that build the enpoint urls. Following the same example we have:
+
+```js
+{
+  ...
+
+  GET_PET_BY_ID: ({
+    petId
+  }) => {
+    return `${BASE}/pet/${petId}`;
+  },
+
+  ...
+}
+```
+
+where  `BASE` is the base url of our API.
+
+### Example of using the service
+
+```js
+const petService = require('../api/pet/service');
+
+petService.getPetById({ petId: 1 })
+.then(pet => {
+  console.log('Pet', pet);
+});
+``` 
+
+As the API request util uses `fetch` under the hood it is necessary to previously install the following in order to use the generated services:
+* `node-fetch` if working in the backend only. [See more](https://github.com/bitinn/node-fetch)
+
+* `whatwg-fetch` if working in the frontend only. [See more](https://github.com/github/fetch)
+
+* `isomorphic-fetch` and `es6-promise` if working on both ends. [See more](https://github.com/matthew-andrews/isomorphic-fetch)
+
+See the file at `api/__core__/request.js` for more details.
+
 
 
 <!-- ## Deployment
