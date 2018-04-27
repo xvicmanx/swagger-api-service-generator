@@ -1,13 +1,13 @@
 {
   "name": "swagger-api-service-generator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An util to generate service API consumers from a Swagger specification.",
   "main": "build/bin/.js",
   "scripts": {
-    "build": "babel . -d build --ignore node_modules build --copy-files",
+    "build": "babel lib -d build --copy-files",
     "babel-run": "node ./node_modules/babel-cli/bin/babel-node.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-services": "npm run babel-run ./bin/main.js"
+    "generate-services": "npm run babel-run ./lib/bin/main.js"
   },
   "bin": {
     "swapisgen": "./build/bin/main.js"

@@ -38,9 +38,7 @@ var _endpointInfoExtractor = require('./endpoint-info-extractor');
 
 var _endpointInfoExtractor2 = _interopRequireDefault(_endpointInfoExtractor);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var FILE_PATHS = {
     requester: function requester(dir) {

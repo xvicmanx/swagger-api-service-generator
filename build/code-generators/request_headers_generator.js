@@ -10,9 +10,7 @@ var _templateCompiler = require('../utils/template-compiler');
 
 var _templateCompiler2 = _interopRequireDefault(_templateCompiler);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var REQUEST_HEADERS_TEMPLATE = 'request-headers-template.tpl.js';
 

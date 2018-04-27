@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 'use strict';
 
 var _nodeFetch = require('node-fetch');
@@ -10,37 +9,15 @@ var _fs = require('fs');
 
 var _fs2 = _interopRequireDefault(_fs);
 
-var _helpers = require('../lib/helpers');
+var _helpers = require('../helpers');
 
-var _lib = require('../lib/');
+var _index = require('../index');
 
-var _lib2 = _interopRequireDefault(_lib);
+var _index2 = _interopRequireDefault(_index);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _asyncToGenerator(fn) {
-  return function () {
-    var gen = fn.apply(this, arguments);return new Promise(function (resolve, reject) {
-      function step(key, arg) {
-        try {
-          var info = gen[key](arg);var value = info.value;
-        } catch (error) {
-          reject(error);return;
-        }if (info.done) {
-          resolve(value);
-        } else {
-          return Promise.resolve(value).then(function (value) {
-            step("next", value);
-          }, function (err) {
-            step("throw", err);
-          });
-        }
-      }return step("next");
-    });
-  };
-}
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var CONFIG_FILE_NAME = 'swagger-service-generator-config.js';
 var CWD = process.cwd();
@@ -89,7 +66,8 @@ _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         case 13:
           definition = _context.sent;
 
-          _lib2.default.generateServices(definition, config.endPointFilter);
+
+          _index2.default.generateServices(definition, config.endPointFilter);
           _context.next = 19;
           break;
 

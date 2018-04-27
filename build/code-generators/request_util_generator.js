@@ -8,12 +8,10 @@ var _templateCompiler = require('../utils/template-compiler');
 
 var _templateCompiler2 = _interopRequireDefault(_templateCompiler);
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var HELPERS_TEMPLATE = 'helpers-template.tpl.js';
+var REQUEST_UTIL_TEMPLATE = 'request-util-template.tpl.js';
 
 exports.default = function () {
-  return _templateCompiler2.default.compile(HELPERS_TEMPLATE);
+  return _templateCompiler2.default.compile(REQUEST_UTIL_TEMPLATE);
 };

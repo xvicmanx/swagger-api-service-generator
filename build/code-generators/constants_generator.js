@@ -8,9 +8,7 @@ var _templateCompiler = require('../utils/template-compiler');
 
 var _templateCompiler2 = _interopRequireDefault(_templateCompiler);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : { default: obj };
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CONSTANTS_TEMPLATE = 'constants-template.tpl.js';
 
