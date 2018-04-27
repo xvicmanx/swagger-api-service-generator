@@ -69,6 +69,12 @@ const EndpointInfoExtractor = function ({
         return endpointParamNames(endpoint, path);
     };
 
+    this.getRequiredParamNames = function() {
+        return this.getParameters()
+            .filter((p) => p.required)
+            .map(p => p.name);
+    };
+
     this.canProduceJSON = function() {
         return (endpoint.produces || []).indexOf('application/json') > -1;
     };

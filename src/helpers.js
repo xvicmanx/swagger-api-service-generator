@@ -85,7 +85,8 @@ export const getJSDocText = ({
     summary,
     description,
     operationName,
-    parameters
+    parameters,
+    responses
 }) => {
     const properiesText = parameters.reduce((text, param) => {
         let paramType = param.type ? `{${param.type}}` : '';
@@ -107,9 +108,10 @@ export const getJSDocText = ({
      * @typedef ${toTitleCase(operationName)}Payload
      * ${properiesText}
      * 
-     * @param {${toTitleCase(operationName)}Payload} ${operationName}Payload
      * 
-     * @returns.
+     * @param {${toTitleCase(operationName)}Payload} ${operationName}Payload
+     *
+     ${getReturnType(responses || {})}
      */`;
 };
 
@@ -133,6 +135,42 @@ export const endpointParamTypes = ({ parameters, definitions }, path) => {
     }, {});
 };
 
+const getReturnType = (responses) => {
+    let data = '';
+    Object.keys(responses).forEach((status) => {
+        data += `*  ${status} - ${responses[status].description}\n`;
+    });
+    data += `*\n`;
+
+    const result =  Object.entries(responses)
+        .find(([k, v]) => {
+            return k.indexOf('200') >=0;
+        });
+    
+    const okResponse = result && result[1];
+    
+    if (okResponse && okResponse.schema) {
+        const schema = okResponse.schema;
+        let dataType = schema.type;
+
+        if (!dataType) {
+            dataType = schema['$ref'].replace('#/definitions/', '')
+        } else if (
+            dataType === 'array' &&
+            schema.items &&
+            schema.items['$ref']
+        ) {
+            dataType = `Array<${schema.items['$ref'].replace('#/definitions/', '')}>`
+        }
+
+        data += `* @return {Promise<${dataType}>}`;
+    } else {
+        data += '* @return {Promise}';
+    }
+    
+    return data;
+}; 
+
 export const endpointParamMetada = ({ parameters, definitions }, path) => {
     return parameters.reduce((acc, p) => {
         let meta = {};
@@ -145,7 +183,6 @@ export const endpointParamMetada = ({ parameters, definitions }, path) => {
                 true
             );
         }
-
         return {
             ...acc,
             [p.name]: meta

@@ -3,7 +3,7 @@ module.exports = {
 //  swaggerDefinitionFile: 'http://localhost:3000/api-docs.json',
  endpointFilter: function (data) {
       var method = data.method;
-      var allowedMethods = ['post', 'get'];
+      var allowedMethods = ['post', 'get', 'delete'];
       var isMethodAllowed = allowedMethods.indexOf(method.toLowerCase()) >= 0;
       return isMethodAllowed;
     },

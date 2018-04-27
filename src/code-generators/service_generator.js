@@ -63,6 +63,7 @@ const getMethodText = (extractor) => {
             requestMethod: extractor.getRequestMethod(),
             jsDocText: extractor.getJSDocText(),
             allParamsText: allParams,
+            allButHeaderParamsText: allButHeaderParams,
             endName: extractor.getEndpointConstantName(),
             contentType: extractor.getContentType(),
             bodyParamsText: paramNames.bodyParams.length > 0 ? paramNames.bodyParams.join(', ') : '{}',
@@ -71,6 +72,8 @@ const getMethodText = (extractor) => {
             queryParamsText: paramNames.queryParams,
             formsParamsText: paramNames.formsParams,
             transformMethodText: canProduceJSON ? 'json' : 'text',
+            allRequiredKeysParamsText: extractor.getRequiredParamNames()
+                .map((k) => `'${k}'`).join(', '),
         }
     );
 };

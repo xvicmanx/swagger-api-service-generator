@@ -7,6 +7,15 @@ export const notEmptyProps = (data) => {
   }, {});
 };
 
+export const throwIfAnyMissing = (props, source) => {
+  props.forEach(key => {
+    if (!source[key]) {
+      throw Error(`Missing argument ${key}`);
+    }
+  });
+};
+
 export default {
   notEmptyProps,
+  throwIfAnyMissing,
 };

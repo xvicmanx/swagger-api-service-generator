@@ -1,6 +1,7 @@
 ${jsDocText}
 export const ${method} = (${method}Payload) => {
-  const { ${allParamsText} } = ${method}Payload;
+  throwIfAnyMissing([${allRequiredKeysParamsText}], ${method}Payload);
+  const { ${allButHeaderParamsText} } = ${method}Payload;
   return request.${requestMethod}(
     endpoints.${endName}({ ${pathParamsText} }),
     {
