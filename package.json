@@ -1,6 +1,6 @@
 {
   "name": "swagger-api-service-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "An util to generate service API consumers from a Swagger specification.",
   "main": "build/index.js",
   "scripts": {
