@@ -13,16 +13,7 @@
     "swapisgen": "./build/bin/main.js"
   },
   "preferGlobal": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xvicmanx/swagger-api-service-generator"
-  },
-  "keywords": [
-    "node",
-    "swagger",
-    "api"
-  ],
-  "author": "Victor Trejo",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",

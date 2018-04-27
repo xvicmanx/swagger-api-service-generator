@@ -7,26 +7,6 @@ An util to generate service API consumers from a Swagger specification.
 To get started it is only necessary to clone this repository, install all the dependencies, configure the file `swagger-service-generator-config.js` and 
 run the generator command.
 
-```js
-// swagger-service-generator-config.js
-module.exports = {
-  swaggerDefinitionFile: 'http://petstore.swagger.io/v2/swagger.json',
-  endpointFilter: function (data) {
-    var method = data.method;
-    var allowedMethods = ['post', 'get'];
-    var isMethodAllowed = allowedMethods.indexOf(method.toLowerCase()) >= 0;
-    return isMethodAllowed;
-  },
-};
-```
-
-```bash
-  npm install -g swagger-api-service-generator
-  swapisgen
-```
- 
- or
-
 ```bash
   git clone https://github.com/xvicmanx/swagger-api-service-generator
   npm install
