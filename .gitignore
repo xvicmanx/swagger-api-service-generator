@@ -1,4 +1,4 @@
 node_modules/
-build/__tests__/
+build/
 api/
 .DS_Store
