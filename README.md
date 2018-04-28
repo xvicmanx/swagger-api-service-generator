@@ -4,8 +4,11 @@ An util to generate service API consumers from a Swagger specification.
 
 ## Getting Started
 
-To get started it is only necessary to clone this repository, install all the dependencies, configure the file `swagger-service-generator-config.js` and 
-run the generator command.
+To get started you can either install the package or clone this repository and install all the dependencies.
+
+Another thing that is necessary is to configure the file `swagger-service-generator-config.js` before running the generator command.
+If you clone this repo the file will be available in the source code but if you
+install the package you can copy the example file and modify it as you need it.
 
 ```js
 // swagger-service-generator-config.js
