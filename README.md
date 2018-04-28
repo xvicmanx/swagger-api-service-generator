@@ -63,7 +63,7 @@ The second property `endpointFilter` is a filter function for the endpoints. In 
 Once the file is modified run
 
 ```bash
-  npm run generate-services
+  swapisgen
 ```
 This should generate a folder called `api` with your services and helpers files in it.
 
